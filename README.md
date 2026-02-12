@@ -9,7 +9,7 @@ The environment is pre-packaged in a public Docker repository.
 ```bash
 docker pull laialbus/ece496:ipex_offload_v3.5
 ```
-### Run the container:
+**Run the container:**
 
 ```bash
 # Example mounting /fast-lab-share to /fast-lab-share inside the container
@@ -47,9 +47,9 @@ The main entry point is `run.py`.
 
 ---
 
-### OPT-1.3B (Baseline vs Bridge)
+### OPT-1.3B
 
-#### Bridge Run
+#### Bridge Run (IPEX with Disk Offloading)
 
 ```bash
 OMP_NUM_THREADS=24 numactl -m 0 -C 0-23 python run.py --benchmark \
@@ -60,7 +60,7 @@ OMP_NUM_THREADS=24 numactl -m 0 -C 0-23 python run.py --benchmark \
     --num-iter 2 --num-warmup 1 --greedy > bridge.out
 ```
 
-#### Accelerate Run (Baseline)
+#### Accelerate ONLY Run (Baseline)
 
 ```bash
 OMP_NUM_THREADS=24 numactl -m 0 -C 0-23 python run.py --benchmark \
@@ -69,34 +69,6 @@ OMP_NUM_THREADS=24 numactl -m 0 -C 0-23 python run.py --benchmark \
     --offload-folder /home/storage/albusl2/offload/opt-1.3b \
     --input-tokens 256 --max-new-tokens 8 --batch-size 1 \
     --num-iter 2 --num-warmup 1 --greedy > accel.out
-```
-
----
-
-### OPT-30B (Memory Constrained: 5GB RAM Limit)
-
-#### Bridge Run
-
-```bash
-OMP_NUM_THREADS=24 numactl -m 0 -C 0-23 python run.py --benchmark \
-    -m /home/storage/opt-30b/ \
-    --dtype bfloat16 --ipex --use-bridge \
-    --offload-folder /home/storage/albusl2/offload/opt-30b \
-    --max-cpu-memory 5GiB --max-disk-memory 100GiB \
-    --input-tokens 256 --max-new-tokens 8 --batch-size 1 \
-    --num-iter 2 --num-warmup 1 --greedy > bridge_30b.out
-```
-
-#### Accelerate Run (Baseline)
-
-```bash
-OMP_NUM_THREADS=24 numactl -m 0 -C 0-23 python run.py --benchmark \
-    -m /home/storage/opt-30b/ \
-    --dtype bfloat16 \
-    --offload-folder /home/storage/albusl2/offload/opt-30b \
-    --max-cpu-memory 5GiB --max-disk-memory 100GiB \
-    --input-tokens 256 --max-new-tokens 8 --batch-size 1 \
-    --num-iter 2 --num-warmup 1 --greedy > accel_30b.out
 ```
 
 ---
@@ -115,7 +87,7 @@ OMP_NUM_THREADS=24 numactl -m 0 -C 0-23 python run.py --benchmark \
     --num-iter 2 --num-warmup 1 --greedy > bridge_llama.out
 ```
 
-#### Accelerate Run (Baseline)
+#### Accelerate Only Run
 
 ```bash
 OMP_NUM_THREADS=24 numactl -m 0 -C 0-23 python run.py --benchmark \
@@ -131,7 +103,7 @@ OMP_NUM_THREADS=24 numactl -m 0 -C 0-23 python run.py --benchmark \
 
 ## Massive Scale Runs (Dummy 640GB Model)
 
-These runs demonstrate capability on extremely large models using shared storage for offloading.
+Configuration A verifies capability on extremely large models using shared storage for offloading.
 
 ---
 
