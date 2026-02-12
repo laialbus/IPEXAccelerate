@@ -8,13 +8,11 @@ The environment is pre-packaged in a public Docker repository.
 **Pull the image:**
 ```bash
 docker pull laialbus/ece496:ipex_offload_v3.5
-
+```
 ### Run the container:
 
-Ensure you mount your storage directories so the container can access models and write offload files.
-
 ```bash
-# Example mounting /home/storage to /home/storage inside the container
+# Example mounting /fast-lab-share to /fast-lab-share inside the container
 docker run --rm -it --privileged --network=host --ipc=host -v ~/:/home/storage -v /fast-lab-share:/fast-lab-share -v /fast-lab-share/albusl2/docker_tmp:/tmp laialbus/ece496:ipex_offload_v3.5 bash
 ```
 
