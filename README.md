@@ -30,7 +30,7 @@ The main entry point is `run.py`.
   Activates the IPEX-Accelerate Bridge. Remove this flag to run standard Accelerate benchmarks.
 
 - `--ipex`  
-  Enables Intel Extension for PyTorch optimizations.
+  Enables Intel Extension for PyTorch optimizations. Also remove this flag to run standard Accelerate benchmarks.
 
 - `--max-cpu-memory`  
   Limit for model weights in RAM (e.g., `5GiB`).
